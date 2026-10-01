@@ -1,26 +1,30 @@
-name: Update README Activity
+name: Update README with Activity
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *' # 修正原本帶有中文字的語法
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write # 確保有寫入儲存庫的權限
 
 jobs:
-  update:
+  update-readme:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Append timestamp to README
-        run: |
-          echo "" >> README.md
-          echo "- Last automated update: $(date)" >> README.md
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          git commit -m "docs: auto-update readme timestamp [skip ci]" || echo "No changes to commit"
-          git push
+      - name: Update README with recent activity
+        uses: lowlighter/metrics@latest
+        with:
+          filename: README.md
+          token: ${{ secrets.REPO_TOKEN }}
+          base: ""
+          plugin_achievements: yes
+          plugin_achievements_display: detailed
+          plugin_achievements_limit: 3
+          plugin_activity: yes
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+          plugin_activity_limit: 5
