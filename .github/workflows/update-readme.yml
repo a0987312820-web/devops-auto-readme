@@ -17,29 +17,51 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Generate and Update Activity in README
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Update README with Commits
         run: |
-          # 1. 取得最近 5 筆 Commit 紀錄
-          COMMIT_LOGS=$(git log -n 5 --pretty=format:"- %s (%an, %ar)")
+          python3 - << 'EOF'
+          import subprocess
 
-          # 2. 準備要寫入 README 的新內容
-          NEW_CONTENT=$(cat <
-          ### Recent Git Commits
-          $COMMIT_LOGS
-          
-          EOF
+          # 1. 取得最近 5 筆 git commit 紀錄
+          result = subprocess.run(
+              ["git", "log", "-n", "5", "--pretty=format:- %s (%an, %ar)"],
+              stdout=subprocess.PIPE,
+              text=True
           )
+          commit_logs = result.stdout.strip()
 
-          # 3. 使用 awk 安全地替換 README.md 中的標記區段內容，避免跳脫字元錯誤
-          awk -v new_content="$NEW_CONTENT" '
-            BEGIN {printing=1}
-            // {print new_content; printing=0}
-            // {printing=1; next}
-            printing {print}
-          ' README.md > README.tmp && mv README.tmp README.md
+          # 2. 讀取 README.md
+          with open("README.md", "r", encoding="utf-8") as f:
+              content = f.read()
 
-          # 4. 提交並推送到遠端倉庫
+          start_marker = ""
+          end_marker = ""
+
+          # 3. 組裝要替換的新內容
+          new_section = f"{start_marker}\n### Recent Git Commits\n{commit_logs}\n{end_marker}"
+
+          # 4. 替換標記區段
+          if start_marker in content and end_marker in content:
+              parts = content.split(start_marker)
+              after_marker = parts[1].split(end_marker)[1]
+              updated_content = parts[0] + new_section + after_marker
+          else:
+              # 如果剛好沒有標記，就直接附加在檔案最下方
+              updated_content = content + "\n\n" + new_section
+
+          # 5. 寫回 README.md
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(updated_content)
+          EOF
+
+      - name: Commit and push changes
+        run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git diff --quiet && git diff --cached --quiet || (git commit -m "docs: auto-update README activity [skip ci]" && git push)
+          git diff --quiet && git diff --cached --quiet || (git commit -m "docs: auto-update recent activity [skip ci]" && git push)
