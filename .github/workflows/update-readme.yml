@@ -9,21 +9,17 @@ permissions:
   contents: write
 
 jobs:
-  update-readme:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update README with recent activity
-        uses: lowlighter/metrics@latest
-        with:
-          filename: README.md
-          token: ${{ secrets.REPO_TOKEN }}
-          base: "header"
-          plugin_achievements: yes
-          plugin_achievements_display: detailed
-          plugin_activity: yes
-          plugin_activity_days: 14
-          plugin_activity_filter: all
-          plugin_activity_limit: 5
+      - name: Update timestamp in README
+        run: |
+          echo "Last workflow run: $(date)" > activity-status.txt
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add activity-status.txt
+          git commit -m "chore: update activity status [skip ci]" || echo "No changes to commit"
+          git push
