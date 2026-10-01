@@ -1,4 +1,4 @@
-name: Update README with Activity
+name: Update README Activity
 
 on:
   schedule:
@@ -9,17 +9,37 @@ permissions:
   contents: write
 
 jobs:
-  update:
+  update-activity:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Update timestamp in README
+      - name: Generate and Update Activity in README
         run: |
-          echo "Last workflow run: $(date)" > activity-status.txt
+          # 1. 取得最近 5 筆 Commit 紀錄
+          COMMIT_LOGS=$(git log -n 5 --pretty=format:"- %s (%an, %ar)")
+
+          # 2. 準備要寫入 README 的新內容
+          NEW_CONTENT=$(cat <
+          ### Recent Git Commits
+          $COMMIT_LOGS
+          
+          EOF
+          )
+
+          # 3. 使用 awk 安全地替換 README.md 中的標記區段內容，避免跳脫字元錯誤
+          awk -v new_content="$NEW_CONTENT" '
+            BEGIN {printing=1}
+            // {print new_content; printing=0}
+            // {printing=1; next}
+            printing {print}
+          ' README.md > README.tmp && mv README.tmp README.md
+
+          # 4. 提交並推送到遠端倉庫
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add activity-status.txt
-          git commit -m "chore: update activity status [skip ci]" || echo "No changes to commit"
-          git push
+          git add README.md
+          git diff --quiet && git diff --cached --quiet || (git commit -m "docs: auto-update README activity [skip ci]" && git push)
