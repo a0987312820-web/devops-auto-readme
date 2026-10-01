@@ -1,0 +1,27 @@
+name: Update README with Activity
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天自動執行一次
+  workflow_dispatch:     # 允許手動觸發
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update README with recent activity
+        uses: lowlighter/metrics@latest
+        with:
+          filename: README.md
+          token: ${{ secrets.REPO_TOKEN }}
+          base: ""
+          plugin_achievements: yes
+          plugin_achievements_display: detailed
+          plugin_achievements_limit: 3
+          plugin_activity: yes
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+          plugin_activity_limit: 5
