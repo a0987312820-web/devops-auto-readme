@@ -1,8 +1,8 @@
-# DevOps Auto-Updating README
+# DevOps Auto-Updating README Project
 
-這是一個透過 GitHub Actions 自動更新活動紀錄的專案。
+Welcome to my DevOps automation repository! This project automatically updates recent repository activity using GitHub Actions.
 
-## Recent Activity
+## 📊 Recent Activity
 
 
-- Last automated update: Thu Oct  1 14:26:54 UTC 2026
+- Recent activity will be automatically populated here.
