@@ -5,9 +5,14 @@ on:
     - cron: '0 0 * * *' # 每天自動執行一次
   workflow_dispatch:     # 允許手動觸發
 
+permissions:
+  contents: write   # <-- 關鍵在這裡！一定要加上這行，允許寫入內容
+
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # <-- 有時候這邊也需要加上
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
