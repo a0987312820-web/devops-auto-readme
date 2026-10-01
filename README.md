@@ -88,9 +88,11 @@ rate limit; without a token it falls back to `git log`.
 
 ## Project management
 
-Work is tracked in **GitHub Projects**, linked to **Issue #1 — "Automate README activity updates"**.
-The feature branch `#1-update-readme` and its PR reference the issue so the board
-moves automatically, and the PR body contains `Closes #1` to auto-close on merge.
+Work is tracked in **GitHub Projects**, with each task captured as a GitHub Issue
+on the board (e.g. "設定 README 自動更新", "研究 GitHub Actions 腳本").
+Every feature branch references its issue, and each PR body contains a
+`Closes #<issue>` keyword so the linked issue closes — and its board card moves to
+**Done** — automatically when the PR merges.
 
 ## License
 
