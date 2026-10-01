@@ -22,7 +22,7 @@ jobs:
         with:
           filename: README.md
           token: ${{ secrets.REPO_TOKEN }}
-          base: ""
+          base: "header"
           plugin_achievements: yes
           plugin_achievements_display: detailed
           plugin_achievements_limit: 3
