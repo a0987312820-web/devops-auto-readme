@@ -1,0 +1,7 @@
+# Keep LF on files that execute in Linux CI, regardless of local OS.
+* text=auto eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.mjs   text eol=lf
+*.sh    text eol=lf
+README.md text eol=lf

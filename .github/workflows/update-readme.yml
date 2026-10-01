@@ -1,12 +1,26 @@
 name: Update README with Activity
 
+# Triggers:
+#  - schedule: once a day at 00:00 UTC
+#  - workflow_dispatch: manual run button for demos
+#  - push to main (excluding README-only commits) to refresh promptly
 on:
   schedule:
-    - cron: '0 0 * * *' # 修正原本帶有中文字的語法
+    - cron: "0 0 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
 
+# Least privilege: the job only needs to write repository contents.
 permissions:
-  contents: write # 確保有寫入儲存庫的權限
+  contents: write
+
+# Never run two updates at once; cancel older in-flight runs.
+concurrency:
+  group: update-readme-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-readme:
@@ -14,17 +28,35 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Update README with recent activity
-        uses: lowlighter/metrics@latest
         with:
-          filename: README.md
+          # Full history so `git log` fallback and dates are accurate.
+          fetch-depth: 0
+          # Use the fine-scoped PAT so the push can trigger other workflows
+          # and is attributable to the intended identity.
           token: ${{ secrets.REPO_TOKEN }}
-          base: ""
-          plugin_achievements: yes
-          plugin_achievements_display: detailed
-          plugin_achievements_limit: 3
-          plugin_activity: yes
-          plugin_activity_days: 14
-          plugin_activity_filter: all
-          plugin_activity_limit: 5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate activity section
+        env:
+          # Passed to the script for authenticated API calls + higher rate limit.
+          # The script never prints the token.
+          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/update-readme.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Idempotent guard: only commit when README actually changed.
+          if git diff --quiet -- README.md; then
+            echo "No README changes to commit."
+            exit 0
+          fi
+          git add README.md
+          git commit -m "docs: auto-update README activity [skip ci]"
+          git push
