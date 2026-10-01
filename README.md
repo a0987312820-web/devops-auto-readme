@@ -1,48 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="111" class="">
-    <defs>
-        <style/>
-    </defs>
-    <style>@keyframes animation-gauge{0%{stroke-dasharray:0 329}}@keyframes animation-rainbow{0%,to{color:#7f00ff;fill:#7f00ff}14%{color:#a933ff;fill:#a933ff}29%{color:#007fff;fill:#007fff}43%{color:#00ff7f;fill:#00ff7f}57%{color:#ff0;fill:#ff0}71%{color:#ff7f00;fill:#ff7f00}86%{color:red;fill:red}}svg{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;font-size:14px;color:#777}h2{margin:8px 0 2px;padding:0;color:#0366d6;font-weight:400;font-size:16px}h2 svg{fill:currentColor}section&gt;.field{margin-left:5px;margin-right:5px}.field{display:flex;align-items:center;margin-bottom:2px;white-space:nowrap}.field svg{margin:0 8px;fill:#959da5;flex-shrink:0}.field.error{color:#cb2431}.field.error svg{fill:#cb2431}.row{display:flex;flex-wrap:wrap}.row section{flex:1 1 0}.activity{margin-bottom:12px}.activity .field{width:100%;overflow:hidden;text-overflow:ellipsis;max-width:450px;white-space:nowrap;margin-bottom:0}:root{--color-calendar-graph-day-bg:#ebedf0;--color-calendar-graph-day-border:rgba(27,31,35,0.06);--color-calendar-graph-day-L1-bg:#9be9a8;--color-calendar-graph-day-L2-bg:#40c463;--color-calendar-graph-day-L3-bg:#30a14e;--color-calendar-graph-day-L4-bg:#216e39;--color-calendar-halloween-graph-day-L1-bg:#ffee4a;--color-calendar-halloween-graph-day-L2-bg:#ffc501;--color-calendar-halloween-graph-day-L3-bg:#fe9600;--color-calendar-halloween-graph-day-L4-bg:#03001c;--color-calendar-winter-graph-day-L1-bg:#0a3069;--color-calendar-winter-graph-day-L2-bg:#0969da;--color-calendar-winter-graph-day-L3-bg:#54aeff;--color-calendar-winter-graph-day-L4-bg:#b6e3ff;--color-calendar-graph-day-L4-border:rgba(27,31,35,0.06);--color-calendar-graph-day-L3-border:rgba(27,31,35,0.06);--color-calendar-graph-day-L2-border:rgba(27,31,35,0.06);--color-calendar-graph-day-L1-border:rgba(27,31,35,0.06)}#metrics-end{width:100%}</style>
-    <style/>
-    <foreignObject x="0" y="0" width="100%" height="100%">
-        <div xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" class="items-wrapper">
-            <section>
-                <h2 class="field">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1116 0v5.25a.75.75 0 01-1.5 0V8a6.5 6.5 0 10-13 0v5.25a.75.75 0 01-1.5 0V8zm5.5 4.25a.75.75 0 01.75-.75h3.5a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75zM3 6.75C3 5.784 3.784 5 4.75 5h6.5c.966 0 1.75.784 1.75 1.75v1.5A1.75 1.75 0 0111.25 10h-6.5A1.75 1.75 0 013 8.25v-1.5zm1.47-.53a.75.75 0 011.06 0l.97.97.97-.97a.75.75 0 011.06 0l.97.97.97-.97a.75.75 0 111.06 1.06l-1.5 1.5a.75.75 0 01-1.06 0L8 7.81l-.97.97a.75.75 0 01-1.06 0l-1.5-1.5a.75.75 0 010-1.06z"/>
-                    </svg>
-                    Recent activity
-                </h2>
-                <div class="row">
-                    <section>
-                        <div class="field error">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                                <path fill-rule="evenodd" d="M2.343 13.657A8 8 0 1113.657 2.343 8 8 0 012.343 13.657zM6.03 4.97a.75.75 0 00-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 101.06 1.06L8 9.06l1.97 1.97a.75.75 0 101.06-1.06L9.06 8l1.97-1.97a.75.75 0 10-1.06-1.06L8 6.94 6.03 4.97z"/>
-                            </svg>
-                            Unexpected error
-                        </div>
-                    </section>
-                </div>
-            </section>
-            <section>
-                <h2 class="field">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                        <path fill-rule="evenodd" d="M3.217 6.962A3.75 3.75 0 010 3.25v-.5C0 1.784.784 1 1.75 1h1.356c.228-.585.796-1 1.462-1h6.864a1.57 1.57 0 011.462 1h1.356c.966 0 1.75.784 1.75 1.75v.5a3.75 3.75 0 01-3.217 3.712 5.014 5.014 0 01-2.771 3.117l.144 1.446c.005.05.03.12.114.204.086.087.217.17.373.227.283.103.618.274.89.568.285.31.467.723.467 1.226v.75h1.25a.75.75 0 110 1.5H2.75a.75.75 0 010-1.5H4v-.75c0-.503.182-.916.468-1.226.27-.294.606-.465.889-.568a1.03 1.03 0 00.373-.227c.084-.085.109-.153.114-.204l.144-1.446a5.014 5.014 0 01-2.77-3.117zM3 2.5H1.75a.25.25 0 00-.25.25v.5c0 .98.626 1.813 1.5 2.122V2.5zm4.457 7.97l-.12 1.204c-.093.925-.858 1.47-1.467 1.691a.764.764 0 00-.3.176c-.037.04-.07.093-.07.21v.75h5v-.75c0-.117-.033-.17-.07-.21a.763.763 0 00-.3-.176c-.609-.221-1.374-.766-1.466-1.69l-.12-1.204a5.052 5.052 0 01-1.087 0zM13 5.373V2.5h1.25a.25.25 0 01.25.25v.5A2.25 2.25 0 0113 5.372zM4.5 1.568c0-.037.03-.068.068-.068h6.864c.037 0 .068.03.068.068V5.5a3.5 3.5 0 11-7 0V1.568z"/>
-                    </svg>
-                    Achievements
-                </h2>
-                <div class="row">
-                    <section class="achievements  largeable-flex-wrap">
-                        <div class="field error">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
-                                <path fill-rule="evenodd" d="M2.343 13.657A8 8 0 1113.657 2.343 8 8 0 012.343 13.657zM6.03 4.97a.75.75 0 00-1.06 1.06L6.94 8 4.97 9.97a.75.75 0 101.06 1.06L8 9.06l1.97 1.97a.75.75 0 101.06-1.06L9.06 8l1.97-1.97a.75.75 0 10-1.06-1.06L8 6.94 6.03 4.97z"/>
-                            </svg>
-                            Unexpected error
-                        </div>
-                    </section>
-                </div>
-            </section>
-        </div>
-        <div xmlns="http://www.w3.org/1999/xhtml" id="metrics-end"></div>
-    </foreignObject>
-</svg>
+# devops-auto-readme
+
+[![Update README](https://github.com/a0987312820-web/devops-auto-readme/actions/workflows/update-readme.yml/badge.svg)](https://github.com/a0987312820-web/devops-auto-readme/actions/workflows/update-readme.yml)
+[![Validate README Markers](https://github.com/a0987312820-web/devops-auto-readme/actions/workflows/validate-markers.yml/badge.svg)](https://github.com/a0987312820-web/devops-auto-readme/actions/workflows/validate-markers.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+
+> **Assignment 3 — DevOps:** A CI pipeline that automatically keeps a README section
+> in sync with recent repository activity, with the work tracked in GitHub Projects (Issue #1).
+
+A GitHub Actions workflow runs on a schedule (and on demand). It pulls the latest
+repository activity through the GitHub REST API — with rate-limit backoff and a
+`git log` fallback — and rewrites the **Recent Activity** section below, in place,
+between machine-readable markers. The commit only happens when the content actually
+changes, so the pipeline is **idempotent** and never creates empty-diff noise.
+
+---
+
+## How it works
+
+```
+schedule / workflow_dispatch / push
+            │
+            ▼
+   actions/checkout  ──►  node scripts/update-readme.mjs
+            │                     │
+            │        GitHub REST API (commits, issues, PRs)
+            │        + exponential backoff on 403/rate-limit
+            │        + git log fallback if the API is unavailable
+            │                     │
+            │        rewrite content between <!-- ACTIVITY:START/END -->
+            ▼                     ▼
+   commit only if README changed  ──►  push with [skip ci]
+```
+
+- **Markers** — the script replaces *only* the text between the HTML comment
+  markers, so the rest of the README is untouched and hand-edits are safe.
+- **Least privilege** — the workflow requests `contents: write` and nothing else.
+- **Secret** — pushes use `REPO_TOKEN`, a fine-scoped PAT stored in repo secrets.
+- **Idempotent** — `git diff --quiet` guards the commit; unchanged runs are no-ops.
+
+<!-- ACTIVITY:START -->
+<!-- This section is generated automatically. Do not edit by hand. -->
+_No activity recorded yet. The next scheduled run of the workflow will populate this section._
+<!-- ACTIVITY:END -->
+
+---
+
+## Repository layout
+
+| Path | Purpose |
+| --- | --- |
+| `scripts/update-readme.mjs` | Generates the activity block and injects it between the markers. |
+| `.github/workflows/update-readme.yml` | Scheduled/dispatch pipeline that runs the script and commits. |
+| `.github/workflows/validate-markers.yml` | CI guard — fails if the README markers are missing/malformed. |
+| `.github/workflows/preview-readme.yml` | On PRs, posts a preview of the generated activity block as a comment. |
+| `docs/ISSUE.md` | Scope / Acceptance Criteria / DoD / WBS for the tracking issue. |
+| `docs/SLIDES_OUTLINE.md` | 10+ slide outline for the landscape PDF report. |
+| `docs/SETUP_CHECKLIST.md` | Manual GitHub steps (secret, issue, PR) to finish the assignment. |
+
+## Running locally
+
+```bash
+# Dry run — prints the block without writing the file
+node scripts/update-readme.mjs --dry-run
+
+# Write the block into README.md between the markers
+node scripts/update-readme.mjs
+```
+
+The script needs no dependencies (Node 18+ built-in `fetch`). Set `GITHUB_TOKEN`
+or `REPO_TOKEN` in the environment to use the authenticated API and raise the
+rate limit; without a token it falls back to `git log`.
+
+## Project management
+
+Work is tracked in **GitHub Projects**, linked to **Issue #1 — "Automate README activity updates"**.
+The feature branch `#1-update-readme` and its PR reference the issue so the board
+moves automatically, and the PR body contains `Closes #1` to auto-close on merge.
+
+## License
+
+[MIT](./LICENSE)

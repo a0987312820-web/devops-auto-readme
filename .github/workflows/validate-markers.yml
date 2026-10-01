@@ -1,0 +1,56 @@
+name: Validate README Markers
+
+# CI guard (O-grade automation): fails the build if the README is missing the
+# machine-readable markers the auto-update pipeline depends on. This prevents a
+# well-meaning edit from silently breaking the automation.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - ".github/workflows/validate-markers.yml"
+  pull_request:
+    paths:
+      - "README.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check markers exist and are well-ordered
+        run: |
+          start='<!-- ACTIVITY:START -->'
+          end='<!-- ACTIVITY:END -->'
+          startN=$(grep -c -F "$start" README.md || true)
+          endN=$(grep -c -F "$end" README.md || true)
+
+          fail=0
+          if [ "$startN" -ne 1 ]; then
+            echo "::error file=README.md::Expected exactly 1 START marker, found $startN"
+            fail=1
+          fi
+          if [ "$endN" -ne 1 ]; then
+            echo "::error file=README.md::Expected exactly 1 END marker, found $endN"
+            fail=1
+          fi
+          if [ "$startN" -eq 1 ] && [ "$endN" -eq 1 ]; then
+            startLine=$(grep -n -F "$start" README.md | cut -d: -f1)
+            endLine=$(grep -n -F "$end" README.md | cut -d: -f1)
+            if [ "$startLine" -ge "$endLine" ]; then
+              echo "::error file=README.md::START marker (line $startLine) must come before END marker (line $endLine)"
+              fail=1
+            fi
+          fi
+
+          if [ "$fail" -ne 0 ]; then
+            echo "README marker validation FAILED."
+            exit 1
+          fi
+          echo "✅ README markers are present and well-ordered."
