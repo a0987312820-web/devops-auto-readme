@@ -9,59 +9,18 @@ permissions:
   contents: write
 
 jobs:
-  update-activity:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Update README with Commits
+      - name: Append timestamp to README
         run: |
-          python3 - << 'EOF'
-          import subprocess
-
-          # 1. 取得最近 5 筆 git commit 紀錄
-          result = subprocess.run(
-              ["git", "log", "-n", "5", "--pretty=format:- %s (%an, %ar)"],
-              stdout=subprocess.PIPE,
-              text=True
-          )
-          commit_logs = result.stdout.strip()
-
-          # 2. 讀取 README.md
-          with open("README.md", "r", encoding="utf-8") as f:
-              content = f.read()
-
-          start_marker = ""
-          end_marker = ""
-
-          # 3. 組裝要替換的新內容
-          new_section = f"{start_marker}\n### Recent Git Commits\n{commit_logs}\n{end_marker}"
-
-          # 4. 替換標記區段
-          if start_marker in content and end_marker in content:
-              parts = content.split(start_marker)
-              after_marker = parts[1].split(end_marker)[1]
-              updated_content = parts[0] + new_section + after_marker
-          else:
-              # 如果剛好沒有標記，就直接附加在檔案最下方
-              updated_content = content + "\n\n" + new_section
-
-          # 5. 寫回 README.md
-          with open("README.md", "w", encoding="utf-8") as f:
-              f.write(updated_content)
-          EOF
-
-      - name: Commit and push changes
-        run: |
+          echo "" >> README.md
+          echo "- Last automated update: $(date)" >> README.md
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git diff --quiet && git diff --cached --quiet || (git commit -m "docs: auto-update recent activity [skip ci]" && git push)
+          git commit -m "docs: auto-update readme timestamp [skip ci]" || echo "No changes to commit"
+          git push
